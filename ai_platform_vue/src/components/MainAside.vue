@@ -34,6 +34,9 @@ export default {
           break
       }
     }
+  },
+  mounted() {
+    this.$router.push("/apply")
   }
 }
 </script>

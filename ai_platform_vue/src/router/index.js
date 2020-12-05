@@ -4,10 +4,13 @@ import MainView from "../views/MainView";
 import Apply from "../views/Apply";
 import Setting from "../views/Setting";
 import App from "../App";
+import Login from "../views/Login";
+import Register from "../views/Register";
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -18,6 +21,16 @@ export default new Router({
         {path:'setting',name:'setting',component:Setting},
       ]
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
+    }
     // {
     //   path: '/apply',
     //   name: 'apply',
