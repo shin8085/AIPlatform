@@ -47,7 +47,7 @@ export default {
             if(res.data.code===200){
               //校验通过
               sessionStorage.setItem("loginSessionId",res.data.data.id);
-              sessionStorage.setItem('userName',this.ruleForm.name);
+              sessionStorage.setItem('username',this.ruleForm.username);
               this.$router.push("/");
             }else{
               this.$message({

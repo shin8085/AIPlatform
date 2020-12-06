@@ -71,4 +71,13 @@ public class AccountController {
         }
         return Result.error();
     }
+
+    /**
+     * 退出登录
+     */
+    @RequestMapping("/logout")
+    public void logout(){
+        Subject subject=SecurityUtils.getSubject();
+        subject.logout();
+    }
 }
