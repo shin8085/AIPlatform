@@ -67,7 +67,25 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          this.$axios.post("/api/register",{
+            username:this.ruleForm.username,
+            password:this.ruleForm.pass
+          }).then(res => {
+            if (res.data.code === 200) {
+              this.$alert(res.data.message, '提示', {
+                confirmButtonText: '去登陆',
+                callback: action => {
+                  this.$router.push("/");
+                }
+              });
+            }else{
+              this.$message({
+                showClose: true,
+                message: res.data.message,
+                type: 'error'
+              });
+            }
+          })
         } else {
           console.log('error submit!!');
           return false;
