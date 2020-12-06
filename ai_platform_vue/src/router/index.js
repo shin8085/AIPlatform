@@ -16,6 +16,9 @@ export default new Router({
       path: '/',
       name: 'mainView',
       component: MainView,
+      meta:{
+        requireAuth:true
+      },
       children:[
         {path:'apply',name:'apply',component:Apply},
         {path:'setting',name:'setting',component:Setting},

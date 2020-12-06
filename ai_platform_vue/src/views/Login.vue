@@ -43,10 +43,20 @@ export default {
     loginSystem(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
+          this.$axios.post("/api/login",this.ruleForm).then(res => {
+            if(res.data.code===200){
+              //校验通过
+              sessionStorage.setItem("loginSessionId",res.data.data.id);
+              sessionStorage.setItem('userName',this.ruleForm.name);
+              this.$router.push("/");
+            }else{
+              this.$message({
+                showClose: true,
+                message: res.data.message,
+                type: 'error'
+              });
+            }
+          })
         }
       });
     },

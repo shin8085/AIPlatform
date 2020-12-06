@@ -12,6 +12,11 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     UserMapper userMapper;
+
+    /**
+     * 增加用户
+     * @param user 用户
+     */
     @Override
     public void addUser(User user) {
         userMapper.addUser(user);
