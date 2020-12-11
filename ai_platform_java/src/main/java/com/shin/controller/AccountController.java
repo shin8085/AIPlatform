@@ -31,6 +31,7 @@ public class AccountController {
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
         try {
             subject.login(token); //登录
+            subject.getSession().setTimeout(24*60*60*1000); //设置session有效时间为24小时
             Session session= subject.getSession();
             return Result.success("登录成功",session);
         }catch (UnknownAccountException e){

@@ -34,9 +34,9 @@ public class ShiroConfig {
           role：拥有某个角色权限才能访问
          */
         Map<String, String> filterMap = new LinkedHashMap<String, String>();
-//        filterMap.put("/blog/*", "authc");
         filterMap.put("/login", "anon");
         filterMap.put("/register", "anon");
+//        filterMap.put("/apply/*","authc");
         factoryBean.setFilterChainDefinitionMap(filterMap);
 
 //        //设置登入的请求
