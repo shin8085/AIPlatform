@@ -28,4 +28,14 @@ public class ApplyController {
     public Result ageEstimation(MultipartFile file) throws IOException {
         return applyService.ageEstimation(file);
     }
+
+    /**
+     * 性别检测
+     * @param file 图片
+     * @return result
+     */
+    @RequestMapping("/gender_detection")
+    public Result genderDetection(MultipartFile file) throws IOException {
+        return applyService.genderDetection(file);
+    }
 }

@@ -6,6 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * 统一返回封装类
+ */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

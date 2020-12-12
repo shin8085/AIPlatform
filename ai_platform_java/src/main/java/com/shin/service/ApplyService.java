@@ -14,4 +14,11 @@ public interface ApplyService {
      * @throws IOException
      */
     Result ageEstimation(MultipartFile file) throws IOException;
+
+    /**
+     * 性别检测
+     * @param file 图片
+     * @return result
+     */
+    Result genderDetection(MultipartFile file) throws IOException;
 }

@@ -1,36 +1,36 @@
 <template>
-<div>
-  <el-upload
-    class="upload-demo"
-    action="/api/apply/age_estimation"
-    accept="image/png, image/jpeg"
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :on-success="onSuccess"
-    :on-progress="onProgress"
-    multiple
-    :limit="1"
-    :on-exceed="handleExceed"
-    :file-list="fileList">
-    <el-button size="small" type="primary">上传图片</el-button>
-    <div slot="tip" class="el-upload__tip">支持上传jpg/png图片,大小小于10MB</div>
-  </el-upload>
+  <div>
+    <el-upload
+      class="upload-demo"
+      action="/api/apply/gender_detection"
+      accept="image/png, image/jpeg"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      :on-success="onSuccess"
+      :on-progress="onProgress"
+      multiple
+      :limit="1"
+      :on-exceed="handleExceed"
+      :file-list="fileList">
+      <el-button size="small" type="primary">上传图片</el-button>
+      <div slot="tip" class="el-upload__tip">支持上传jpg/png图片,大小小于10MB</div>
+    </el-upload>
 
-  <div class="demo-image">
-    <el-image
-      style="width: 400px; height: 400px"
-      :src="url"
-      :fit="fit"
-      v-show="isShow"
-      v-loading="loading"></el-image>
+    <div class="demo-image">
+      <el-image
+        style="width: 400px; height: 400px"
+        :src="url"
+        :fit="fit"
+        v-show="isShow"
+        v-loading="loading"></el-image>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
 export default {
-  name: "AgeEstimation",
+  name: "GenderDetection",
   data() {
     return {
       fileList: [],
