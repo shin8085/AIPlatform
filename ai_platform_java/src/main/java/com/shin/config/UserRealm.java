@@ -2,7 +2,6 @@ package com.shin.config;
 
 import com.shin.dao.UserMapper;
 import com.shin.pojo.User;
-import com.shin.server.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;

@@ -1,8 +1,8 @@
-package com.shin.server.Impl;
+package com.shin.service.Impl;
 
 import com.shin.dao.UserMapper;
 import com.shin.pojo.User;
-import com.shin.server.UserService;
+import com.shin.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

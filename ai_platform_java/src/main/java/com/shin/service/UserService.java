@@ -1,4 +1,4 @@
-package com.shin.server;
+package com.shin.service;
 
 import com.shin.pojo.User;
 

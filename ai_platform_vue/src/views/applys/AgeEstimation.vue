@@ -1,19 +1,24 @@
 <template>
-<div>
-  <el-upload
-    class="upload-demo"
-    action="/api/apply/age_estimation"
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :on-success="onSuccess"
-    :on-progress="onProgress"
-    multiple
-    :limit="1"
-    :on-exceed="handleExceed"
-    :file-list="fileList">
-    <el-button size="small" type="primary">上传图片</el-button>
-  </el-upload>
+<div class="source">
+  <div>
+    <el-upload
+      class="upload-demo"
+      action="/api/apply/age_estimation"
+      accept="image/png, image/jpeg"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      :on-success="onSuccess"
+      :on-progress="onProgress"
+      multiple
+      :limit="1"
+      :on-exceed="handleExceed"
+      :file-list="fileList">
+      <el-button size="small" type="primary">上传图片</el-button>
+      <div slot="tip" class="el-upload__tip">支持上传jpg/png图片</div>
+    </el-upload>
+  </div>
+
   <div class="demo-image">
     <el-image
       style="width: 400px; height: 400px"
@@ -77,9 +82,12 @@ export default {
 
 <style scoped>
 .upload-demo{
-  height: 200px;
+  line-height: 60px;
   width: 300px;
   margin-right: auto;
   margin-left: auto;
+}
+.el-upload__tip{
+  line-height: 20px;
 }
 </style>

@@ -1,7 +1,7 @@
 package com.shin.controller;
 
 import com.shin.pojo.User;
-import com.shin.server.UserService;
+import com.shin.service.UserService;
 import com.shin.utils.Result;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
