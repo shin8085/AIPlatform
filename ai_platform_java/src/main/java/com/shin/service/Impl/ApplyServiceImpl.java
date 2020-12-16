@@ -12,7 +12,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -98,6 +100,28 @@ public class ApplyServiceImpl implements ApplyService {
             return Result.success(tempImageRelativePath +time+".jpg");
         }
         return Result.error("未检测到人脸");
+    }
+
+    /**
+     * 烟雾检测
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    @Override
+    public Result smokeDetection(MultipartFile file) throws IOException {
+        Map<String, Object> resultMap = AIInterface.request("/smoke_detection/smoke_detection",file);
+        System.out.println(resultMap);
+        double confidences= (double) ((List<Object>)resultMap.get("confidences")).get(0);
+        NumberFormat numberFormat=NumberFormat.getInstance();
+        numberFormat.setMaximumFractionDigits(2);
+        String result=numberFormat.format(confidences*100);
+        long time = new Date().getTime();
+        file.transferTo(new File(tempImagePath +time+".jpg"));
+        Map<String,String> data=new HashMap<>();
+        data.put("path",tempImageRelativePath +time+".jpg");
+        data.put("confidences",result);
+        return Result.success("success",data);
     }
 
     /**

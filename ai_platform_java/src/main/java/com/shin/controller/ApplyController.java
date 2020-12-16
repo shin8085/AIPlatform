@@ -41,6 +41,17 @@ public class ApplyController {
     }
 
     /**
+     * 烟雾检测
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    @RequestMapping("/smoke_detection")
+    public Result smokeDetection(MultipartFile file) throws IOException {
+        return applyService.smokeDetection(file);
+    }
+
+    /**
      * 性别检测
      * @param file 图片
      * @return result

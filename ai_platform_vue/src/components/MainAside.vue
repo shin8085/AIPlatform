@@ -48,6 +48,11 @@ export default {
             this.$router.push("/ageEstimation");
           }
           break;
+        case '1-4':
+          if(this.$router.currentRoute.path!=="/smokeDetection"){
+            this.$router.push("/smokeDetection");
+          }
+          break;
         case '1-7':
           if(this.$router.currentRoute.path!=="/genderDetection"){
             this.$router.push("/genderDetection");
