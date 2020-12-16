@@ -19,6 +19,17 @@ public class ApplyController {
     ApplyService applyService;
 
     /**
+     * 人脸识别
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    @RequestMapping("face_recognize")
+    public Result faceDetection(MultipartFile file) throws IOException {
+        return applyService.faceDetection(file);
+    }
+
+    /**
      * 年龄检测
      * @param file 图片
      * @return Result

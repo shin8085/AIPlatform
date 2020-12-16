@@ -8,6 +8,14 @@ import java.io.IOException;
 public interface ApplyService {
 
     /**
+     * 人脸识别
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    Result faceDetection(MultipartFile file) throws IOException;
+
+    /**
      * 年龄检测
      * @param file 图片
      * @return Result

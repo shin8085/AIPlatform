@@ -8,6 +8,7 @@ import Login from "../views/Login";
 import Register from "../views/Register";
 import AgeEstimation from "../views/applys/AgeEstimation";
 import GenderDetection from "../views/applys/GenderDetection";
+import FaceRecognize from "../views/applys/FaceRecognize";
 
 Vue.use(Router)
 
@@ -23,6 +24,7 @@ export default new Router({
       },
       children:[
         {path:'apply',name:'apply',component:Apply},
+        {path:'faceRecognize',name:'faceRecognize',component:FaceRecognize},
         {path:'ageEstimation',name:'ageEstimation',component:AgeEstimation},
         {path:'genderDetection',name:'genderDetection',component:GenderDetection},
         {path:'setting',name:'setting',component:Setting},

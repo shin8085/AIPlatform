@@ -17,6 +17,7 @@ public class AIInterface {
         RestTemplate restTemplate=new RestTemplate();
         Map<String,String> request=new HashMap<>();
         request.put("baseimg",base64);
+        request.put("people_id","123");
         File file1=new File("E:/Temp/test.txt");
         Writer writer=new FileWriter(file1);
         writer.write(base64);

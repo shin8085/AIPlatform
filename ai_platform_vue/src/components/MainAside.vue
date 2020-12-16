@@ -14,16 +14,14 @@
           <span>应用</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">人脸检测</el-menu-item>
-          <el-menu-item index="1-2">人脸识别</el-menu-item>
-          <el-menu-item index="1-3">人脸特征</el-menu-item>
-          <el-menu-item index="1-4">年龄检测</el-menu-item>
-          <el-menu-item index="1-5">目标检测</el-menu-item>
-          <el-menu-item index="1-6">烟雾检测</el-menu-item>
-          <el-menu-item index="1-7">驾驶员状态检测</el-menu-item>
-          <el-menu-item index="1-8">口罩检测</el-menu-item>
-          <el-menu-item index="1-9">性别检测</el-menu-item>
-          <el-menu-item index="1-10">疲劳驾驶检测</el-menu-item>
+          <el-menu-item index="1-1">人脸识别</el-menu-item>
+          <el-menu-item index="1-2">年龄检测</el-menu-item>
+          <el-menu-item index="1-3">目标检测</el-menu-item>
+          <el-menu-item index="1-4">烟雾检测</el-menu-item>
+          <el-menu-item index="1-5">驾驶员状态检测</el-menu-item>
+          <el-menu-item index="1-6">口罩检测</el-menu-item>
+          <el-menu-item index="1-7">性别检测</el-menu-item>
+          <el-menu-item index="1-8">疲劳驾驶检测</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="2">
@@ -40,12 +38,17 @@ export default {
   methods: {
     onSelect(index){
       switch (index){
-        case '1-4':
+        case '1-1':
+          if(this.$router.currentRoute.path!=="/faceRecognize"){
+            this.$router.push("/faceRecognize");
+          }
+          break;
+        case '1-2':
           if(this.$router.currentRoute.path!=="/ageEstimation"){
             this.$router.push("/ageEstimation");
           }
           break;
-        case '1-9':
+        case '1-7':
           if(this.$router.currentRoute.path!=="/genderDetection"){
             this.$router.push("/genderDetection");
           }
