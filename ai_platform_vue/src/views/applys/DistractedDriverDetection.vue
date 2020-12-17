@@ -17,7 +17,7 @@
       <div slot="tip" class="el-upload__tip">支持上传jpg/png图片,大小小于10MB</div>
     </el-upload>
     <div class="demo-image" v-show="isShow">
-      <span class="demonstration" style="display: block;line-height: 10px">{{ confidences }}</span>
+      <span class="demonstration" style="display: block;line-height: 10px">{{ status }} {{confidences}}</span>
       <el-image
         style="width: 400px; height: 400px"
         :src="url"
@@ -36,6 +36,7 @@ export default {
       fit: 'contain',
       url: '/api/images/initImage.jpg',
       confidences:'',
+      status:'',
       isShow: false,
       loading: false
     };
@@ -44,7 +45,8 @@ export default {
     handleRemove(file, fileList) {
       console.log(file, fileList);
       this.isShow=false;
-      this.confidences=''
+      this.confidences='';
+      this.status='';
       this.url='/api/images/initImage.jpg';
     },
     handlePreview(file) {
@@ -62,7 +64,8 @@ export default {
         this.loading=false;
         this.isShow=true;
         this.url='http://localhost:8081'+data.data.path;
-        this.confidences='有烟雾的概率：'+data.data.confidences+'%';
+        this.confidences='(概率：'+data.data.confidences+'%)';
+        this.status='驾驶员正在'+data.data.status;
       }else{
         //检测失败
         this.loading=false;

@@ -29,7 +29,23 @@ public class ApplyServiceImpl implements ApplyService {
     @Value("${image.upload.tmp-path.relative}")
     private String tempImageRelativePath;
 
+    //目标检测结果
     static String [] ods={"person","bicycle","car","motorbike","aeroplane","bus","train","truck","boat","traffic light","fire hydrant","stop sign","parking meter","bench","bird","cat","dog","horse","sheep","cow","elephant","bear","zebra","giraffe","backpack","umbrella","handbag","tie","suitcase","frisbee","skis","snowboard","sports ball","kite","baseball bat","baseball glove","skateboard","surfboard","tennis racket","bottle","wine glass","cup","fork","knife","spoon","bowl","banana","apple","sandwich","orange","broccoli","carrot","hot dog","pizza","donut","cake","chair","sofa","pottedplant","bed","diningtable","toilet","tvmonitor","laptop","mouse","remote","keyboard","cell phone","microwave","oven","toaster","sink","refrigerator","book","clock","vase","scissors","teddy bear","hair drier","toothbrush"};
+
+    static Map<String,String> driver_status=new HashMap<>();
+
+    static{
+        driver_status.put("normal driving","安全驾驶");
+        driver_status.put("texting-right","右手打字");
+        driver_status.put("talking on the phone-right","右手打电话");
+        driver_status.put("texting-left","左手打字");
+        driver_status.put("talking on the phone-left","左手打电话");
+        driver_status.put("operation the radio","调收音机");
+        driver_status.put("drinking","喝饮料");
+        driver_status.put("reaching behind","拿后面的东西");
+        driver_status.put("hair and makeup","整理头发和化妆");
+        driver_status.put("talking to passenger","和其他乘客说话");
+    }
 
     /**
      * 人脸识别
@@ -132,7 +148,6 @@ public class ApplyServiceImpl implements ApplyService {
                 graphics.setFont(font);
                 FontMetrics fontMetrics = graphics.getFontMetrics(font);
                 int font_w=fontMetrics.stringWidth(ods[r]); //获取文字宽度
-                System.out.println(font_w);
                 graphics.drawString(ods[r], (x1+x2)/2-font_w/2,(y1+y2)/2); //文字居中显示
                 graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
             }
@@ -176,7 +191,18 @@ public class ApplyServiceImpl implements ApplyService {
     public Result distractedDriverDetection(MultipartFile file) throws IOException {
         Map<String, Object> resultMap = AIInterface.request("/distracted_driver_detection/distracted_driver_detection",file);
         System.out.println(resultMap);
-        return null;
+        double confidences= (double) ((List<Object>)resultMap.get("confidences")).get(0);
+        String status= ((List<String>) resultMap.get("result")).get(0);
+        NumberFormat numberFormat=NumberFormat.getInstance();
+        numberFormat.setMaximumFractionDigits(2);
+        String result=numberFormat.format(confidences);
+        long time = new Date().getTime();
+        file.transferTo(new File(tempImagePath +time+".jpg"));
+        Map<String,String> data=new HashMap<>();
+        data.put("path",tempImageRelativePath +time+".jpg");
+        data.put("confidences",result);
+        data.put("status",driver_status.get(status));
+        return Result.success("success",data);
     }
 
     /**
