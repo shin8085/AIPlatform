@@ -125,6 +125,53 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     /**
+     * 驾驶员状态检测
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    @Override
+    public Result distractedDriverDetection(MultipartFile file) throws IOException {
+        Map<String, Object> resultMap = AIInterface.request("/distracted_driver_detection/distracted_driver_detection",file);
+        System.out.println(resultMap);
+        return null;
+    }
+
+    /**
+     * 口罩检测
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    @Override
+    public Result maskDetection(MultipartFile file) throws IOException {
+        Map<String, Object> resultMap = AIInterface.request("/mask_detection/mask_detection",file);
+        System.out.println(resultMap);
+        if(resultMap!=null){
+            List<List<Object>> points=(List<List<Object>>)resultMap.get("boxes");
+            List<List<String>> result=(List<List<String>>)resultMap.get("result");
+            if(points.isEmpty()){
+                return Result.error("未检测到人脸");
+            }
+            BufferedImage image = ImageIO.read(file.getInputStream());
+            Graphics graphics = image.getGraphics();
+            for(int i=0;i<points.size();i++){
+                int x1=(int)points.get(i).get(0);
+                int y1=(int)points.get(i).get(1);
+                String r=result.get(i).get(0);
+                graphics.setColor(Color.red);
+                graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/12));
+                graphics.drawString(r,x1,y1);
+            }
+            long time = new Date().getTime();
+            File outputFile = new File(tempImagePath +time+".jpg");
+            ImageIO.write(image,"jpg",outputFile);
+            return Result.success(tempImageRelativePath +time+".jpg");
+        }
+        return Result.error("未检测到人脸");
+    }
+
+    /**
      * 性别检测
      * @param file 图片
      * @return result

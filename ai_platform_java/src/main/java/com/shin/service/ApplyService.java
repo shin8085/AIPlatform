@@ -32,6 +32,22 @@ public interface ApplyService {
     Result smokeDetection(MultipartFile file) throws IOException;
 
     /**
+     * 驾驶员状态检测
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    Result distractedDriverDetection(MultipartFile file) throws IOException;
+
+    /**
+     * 口罩检测
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    Result maskDetection(MultipartFile file) throws IOException;
+
+    /**
      * 性别检测
      * @param file 图片
      * @return result

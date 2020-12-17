@@ -21,7 +21,6 @@
           <el-menu-item index="1-5">驾驶员状态检测</el-menu-item>
           <el-menu-item index="1-6">口罩检测</el-menu-item>
           <el-menu-item index="1-7">性别检测</el-menu-item>
-          <el-menu-item index="1-8">疲劳驾驶检测</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="2">
@@ -51,6 +50,16 @@ export default {
         case '1-4':
           if(this.$router.currentRoute.path!=="/smokeDetection"){
             this.$router.push("/smokeDetection");
+          }
+          break;
+        case '1-5':
+          if(this.$router.currentRoute.path!=="/distractedDriverDetection"){
+            this.$router.push("/distractedDriverDetection");
+          }
+          break;
+        case '1-6':
+          if(this.$router.currentRoute.path!=="/maskDetection"){
+            this.$router.push("/maskDetection");
           }
           break;
         case '1-7':

@@ -52,6 +52,28 @@ public class ApplyController {
     }
 
     /**
+     * 驾驶员状态检测
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    @RequestMapping("/distractedDriverDetection")
+    public Result distractedDriverDetection(MultipartFile file) throws IOException {
+        return applyService.distractedDriverDetection(file);
+    }
+
+    /**
+     * 口罩检测
+     * @param file 图片
+     * @return Result
+     * @throws IOException
+     */
+    @RequestMapping("/mask_detection")
+    public Result maskDetection(MultipartFile file) throws IOException {
+        return applyService.maskDetection(file);
+    }
+
+    /**
      * 性别检测
      * @param file 图片
      * @return result
