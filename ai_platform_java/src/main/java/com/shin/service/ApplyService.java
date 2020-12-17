@@ -24,6 +24,13 @@ public interface ApplyService {
     Result ageEstimation(MultipartFile file) throws IOException;
 
     /**
+     * 目标检测
+     * @param file 图片
+     * @return Result
+     */
+    Result objectDetection(MultipartFile file) throws IOException;
+
+    /**
      * 烟雾检测
      * @param file 图片
      * @return Result

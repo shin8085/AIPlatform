@@ -41,6 +41,16 @@ public class ApplyController {
     }
 
     /**
+     * 目标检测
+     * @param file 图片
+     * @return Result
+     */
+    @RequestMapping("object_detection")
+    public Result objectDetection(MultipartFile file) throws IOException {
+        return applyService.objectDetection(file);
+    }
+
+    /**
      * 烟雾检测
      * @param file 图片
      * @return Result

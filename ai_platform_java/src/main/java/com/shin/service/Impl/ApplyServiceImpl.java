@@ -29,6 +29,8 @@ public class ApplyServiceImpl implements ApplyService {
     @Value("${image.upload.tmp-path.relative}")
     private String tempImageRelativePath;
 
+    static String [] ods={"person","bicycle","car","motorbike","aeroplane","bus","train","truck","boat","traffic light","fire hydrant","stop sign","parking meter","bench","bird","cat","dog","horse","sheep","cow","elephant","bear","zebra","giraffe","backpack","umbrella","handbag","tie","suitcase","frisbee","skis","snowboard","sports ball","kite","baseball bat","baseball glove","skateboard","surfboard","tennis racket","bottle","wine glass","cup","fork","knife","spoon","bowl","banana","apple","sandwich","orange","broccoli","carrot","hot dog","pizza","donut","cake","chair","sofa","pottedplant","bed","diningtable","toilet","tvmonitor","laptop","mouse","remote","keyboard","cell phone","microwave","oven","toaster","sink","refrigerator","book","clock","vase","scissors","teddy bear","hair drier","toothbrush"};
+
     /**
      * 人脸识别
      * @param file 图片
@@ -100,6 +102,46 @@ public class ApplyServiceImpl implements ApplyService {
             return Result.success(tempImageRelativePath +time+".jpg");
         }
         return Result.error("未检测到人脸");
+    }
+
+    /**
+     * 目标检测
+     * @param file 图片
+     * @return Result
+     */
+    @Override
+    public Result objectDetection(MultipartFile file) throws IOException {
+        Map<String, Object> resultMap = AIInterface.request("/object_detection/object_detection",file);
+        System.out.println(resultMap);
+        if(resultMap!=null){
+            List<List<Object>> points=(List<List<Object>>)resultMap.get("boxes");
+            List<Integer> result=(List<Integer>)resultMap.get("result");
+            if(points.isEmpty()){
+                return Result.error("未检测到物体");
+            }
+            BufferedImage image = ImageIO.read(file.getInputStream());
+            Graphics2D graphics = (Graphics2D) image.getGraphics();
+            for(int i=0;i<points.size();i++){
+                int x1=(int)points.get(i).get(0);
+                int y1=(int)points.get(i).get(1);
+                int x2=(int)points.get(i).get(2);
+                int y2=(int)points.get(i).get(3);
+                int r=result.get(i);
+                graphics.setColor(Color.red);
+                Font font=new Font("SimSun",Font.BOLD,image.getWidth()/12);
+                graphics.setFont(font);
+                FontMetrics fontMetrics = graphics.getFontMetrics(font);
+                int font_w=fontMetrics.stringWidth(ods[r]); //获取文字宽度
+                System.out.println(font_w);
+                graphics.drawString(ods[r], (x1+x2)/2-font_w/2,(y1+y2)/2); //文字居中显示
+                graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
+            }
+            long time = new Date().getTime();
+            File outputFile = new File(tempImagePath +time+".jpg");
+            ImageIO.write(image,"jpg",outputFile);
+            return Result.success(tempImageRelativePath +time+".jpg");
+        }
+        return Result.error("未检测到物体");
     }
 
     /**

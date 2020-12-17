@@ -12,6 +12,7 @@ import FaceRecognize from "../views/applys/FaceRecognize";
 import SmokeDetection from "../views/applys/SmokeDetection";
 import DistractedDriverDetection from "../views/applys/DistractedDriverDetection";
 import MaskDetection from "../views/applys/MaskDetection";
+import ObjectDetection from "../views/applys/ObjectDetection";
 
 Vue.use(Router)
 
@@ -29,6 +30,7 @@ export default new Router({
         {path:'apply',name:'apply',component:Apply},
         {path:'faceRecognize',name:'faceRecognize',component:FaceRecognize},
         {path:'ageEstimation',name:'ageEstimation',component:AgeEstimation},
+        {path:'objectDetection',name:'objectDetection',component:ObjectDetection},
         {path:'smokeDetection',name:'smokeDetection',component:SmokeDetection},
         {path:'distractedDriverDetection',name:'distractedDriverDetection',component:DistractedDriverDetection},
         {path:'MaskDetection',name:'maskDetection',component:MaskDetection},
