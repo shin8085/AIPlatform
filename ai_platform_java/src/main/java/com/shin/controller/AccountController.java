@@ -1,6 +1,8 @@
 package com.shin.controller;
 
+import com.shin.dao.InvokingCountMapper;
 import com.shin.pojo.User;
+import com.shin.service.InvokingCountService;
 import com.shin.service.UserService;
 import com.shin.utils.Result;
 import org.apache.shiro.SecurityUtils;
@@ -18,6 +20,9 @@ public class AccountController {
 
     @Resource
     UserService userService;
+
+    @Resource
+    InvokingCountService invokingCountService;
 
     /**
      * 用户登录
@@ -52,6 +57,7 @@ public class AccountController {
     public Result register(@RequestBody User user){
         boolean result = userService.registerUser(user);
         if(result){
+            invokingCountService.initCount(user.getUsername()); //初始化ai调用次数
             return Result.success("注册成功");
         }
         else{

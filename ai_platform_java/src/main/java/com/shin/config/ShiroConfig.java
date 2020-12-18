@@ -36,7 +36,7 @@ public class ShiroConfig {
         Map<String, String> filterMap = new LinkedHashMap<String, String>();
         filterMap.put("/login", "anon");
         filterMap.put("/register", "anon");
-//        filterMap.put("/apply/*","authc");
+        filterMap.put("/apply/*","authc");
         factoryBean.setFilterChainDefinitionMap(filterMap);
 
 //        //设置登入的请求

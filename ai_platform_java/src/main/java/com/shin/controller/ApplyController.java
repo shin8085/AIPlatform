@@ -1,8 +1,11 @@
 package com.shin.controller;
 
+import com.shin.pojo.User;
 import com.shin.service.ApplyService;
+import com.shin.service.InvokingCountService;
 import com.shin.utils.Result;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,14 +20,14 @@ public class ApplyController {
 
     @Resource
     ApplyService applyService;
-
+    
     /**
      * 人脸识别
      * @param file 图片
      * @return Result
      * @throws IOException
      */
-    @RequestMapping("face_recognize")
+    @RequestMapping("/face_recognize")
     public Result faceDetection(MultipartFile file) throws IOException {
         return applyService.faceDetection(file);
     }
@@ -45,7 +48,7 @@ public class ApplyController {
      * @param file 图片
      * @return Result
      */
-    @RequestMapping("object_detection")
+    @RequestMapping("/object_detection")
     public Result objectDetection(MultipartFile file) throws IOException {
         return applyService.objectDetection(file);
     }
