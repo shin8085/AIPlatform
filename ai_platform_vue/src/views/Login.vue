@@ -48,7 +48,7 @@ export default {
               //校验通过
               sessionStorage.setItem("loginSessionId",res.data.data.id);
               sessionStorage.setItem('username',this.ruleForm.username);
-              this.$router.push("/");
+              this.$router.push("/homePage");
             }else{
               this.$message({
                 showClose: true,

@@ -13,6 +13,7 @@ import SmokeDetection from "../views/applys/SmokeDetection";
 import DistractedDriverDetection from "../views/applys/DistractedDriverDetection";
 import MaskDetection from "../views/applys/MaskDetection";
 import ObjectDetection from "../views/applys/ObjectDetection";
+import HomePage from "../views/HomePage";
 
 Vue.use(Router)
 
@@ -27,15 +28,16 @@ export default new Router({
         requireAuth:true
       },
       children:[
-        {path:'apply',name:'apply',component:Apply},
-        {path:'faceRecognize',name:'faceRecognize',component:FaceRecognize},
-        {path:'ageEstimation',name:'ageEstimation',component:AgeEstimation},
-        {path:'objectDetection',name:'objectDetection',component:ObjectDetection},
-        {path:'smokeDetection',name:'smokeDetection',component:SmokeDetection},
-        {path:'distractedDriverDetection',name:'distractedDriverDetection',component:DistractedDriverDetection},
-        {path:'MaskDetection',name:'maskDetection',component:MaskDetection},
-        {path:'genderDetection',name:'genderDetection',component:GenderDetection},
-        {path:'setting',name:'setting',component:Setting},
+        {path:'/homePage',name:'homePage',component:HomePage},
+        {path:'/apply',name:'apply',component:Apply},
+        {path:'/faceRecognize',name:'faceRecognize',component:FaceRecognize},
+        {path:'/ageEstimation',name:'ageEstimation',component:AgeEstimation},
+        {path:'/objectDetection',name:'objectDetection',component:ObjectDetection},
+        {path:'/smokeDetection',name:'smokeDetection',component:SmokeDetection},
+        {path:'/distractedDriverDetection',name:'distractedDriverDetection',component:DistractedDriverDetection},
+        {path:'/MaskDetection',name:'maskDetection',component:MaskDetection},
+        {path:'/genderDetection',name:'genderDetection',component:GenderDetection},
+        {path:'/setting',name:'setting',component:Setting},
       ]
     },
     {

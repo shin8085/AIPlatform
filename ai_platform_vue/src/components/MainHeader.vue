@@ -37,7 +37,7 @@ export default {
               this.$router.push('/login')
             })
           }).catch(()=>{
-            
+
           })
       }
     }
