@@ -1,6 +1,7 @@
 import router from '../router'
 import Axios from "axios";
 router.beforeEach((to,from,next)=>{
+  document.title="AI开放平台"; //网页标题
   if(to.matched.some(res=>res.meta.requireAuth)){ //判断是否需要权限
     let loginSessionId=sessionStorage.getItem("loginSessionId");
     if(loginSessionId){

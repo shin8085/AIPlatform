@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class ApplyAspect {
 
     @Resource

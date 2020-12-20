@@ -9,10 +9,12 @@
       :before-remove="beforeRemove"
       :on-success="onSuccess"
       :on-progress="onProgress"
+      :on-change="onChange"
       multiple
       :limit="1"
       :on-exceed="handleExceed"
-      :file-list="fileList">
+      :file-list="fileList"
+      :auto-upload="false">
       <el-button size="small" type="primary">上传图片</el-button>
       <div slot="tip" class="el-upload__tip">支持上传jpg/png图片,大小小于10MB</div>
     </el-upload>
@@ -73,6 +75,15 @@ export default {
     onProgress(){
       this.loading=true;
       this.isShow=true;
+    },
+    onChange(file){
+      let reader = new FileReader()
+      reader.readAsDataURL(file.raw)
+      reader.onload  = function(event){
+        let img_base64 = this.result
+        console.log(img_base64)
+        
+      }
     }
   }
 }

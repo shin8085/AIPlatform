@@ -2,6 +2,7 @@
   <div style="width: inherit">
     <h5 style="line-height: 120px">AI开放平台</h5>
     <el-menu
+      default-active="/homePage"
       class="el-menu-vertical-demo"
       background-color="#333"
       text-color="#fff"

@@ -3,15 +3,29 @@ package com.shin.controller;
 import com.shin.pojo.User;
 import com.shin.service.ApplyService;
 import com.shin.service.InvokingCountService;
+import com.shin.utils.AIInterface;
+import com.shin.utils.ImageTran;
 import com.shin.utils.Result;
 
 import org.apache.shiro.SecurityUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.annotation.Resource;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -20,6 +34,38 @@ public class ApplyController {
 
     @Resource
     ApplyService applyService;
+
+    @RequestMapping("/test")
+    public Result test(@RequestBody Map<String,String> map) throws IOException {
+        String base64 = map.get("base64Data");
+        RestTemplate restTemplate=new RestTemplate();
+        Map<String,String> request=new HashMap<>();
+        request.put("baseimg",base64);
+        request.put("people_id","123");
+        Map<String, Object> resultMap =restTemplate.postForObject("http://lggsoft.vicp.net:8000"+"/face/recognize", request, Map.class);
+        System.out.println(resultMap);
+        if(resultMap!=null){
+            List<List<Object>> boxes=(List<List<Object>>)resultMap.get("boxes");
+            BufferedImage image = ImageTran.base64ToBufferedImage(base64);
+            if(boxes.isEmpty()){
+                return Result.error(ImageTran.BufferedImageToBase64(image));
+            }
+
+            Graphics2D graphics = (Graphics2D) image.getGraphics();
+            for(int i=0;i<boxes.size();i++){
+                int x1=(int)boxes.get(i).get(0);
+                int y1=(int)boxes.get(i).get(1);
+                int x2=(int)boxes.get(i).get(2);
+                int y2=(int)boxes.get(i).get(3);
+                graphics.setStroke(new BasicStroke(3.0f));
+                graphics.setColor(Color.red);
+                graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
+            }
+
+            return Result.success(ImageTran.BufferedImageToBase64(image));
+        }
+        return Result.error("未检测到人脸");
+    }
     
     /**
      * 人脸识别
