@@ -9,22 +9,24 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * 图片 base64编码 互转工具类
+ */
 public class ImageTran {
 
     /**
      * BufferedImage 编码转换为 base64
-     *
-     * @param bufferedImage
-     * @return
+     * @param bufferedImage 图片
+     * @return String
      */
     public static String BufferedImageToBase64(BufferedImage bufferedImage) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();//io流
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();//io流
         try {
-            ImageIO.write(bufferedImage, "png", baos);//写入流中
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);//写入流中
         } catch (IOException e) {
             e.printStackTrace();
         }
-        byte[] bytes = baos.toByteArray();//转换成字节
+        byte[] bytes = byteArrayOutputStream.toByteArray();//转换成字节
         BASE64Encoder encoder = new BASE64Encoder();
         String png_base64 = encoder.encodeBuffer(bytes).trim();//转换成base64串
         png_base64 = png_base64.replaceAll("\n", "").replaceAll("\r", "");//删除 \r\n
@@ -34,16 +36,15 @@ public class ImageTran {
 
     /**
      * base64 编码转换为 BufferedImage
-     *
-     * @param base64
-     * @return
+     * @param base64 图片的base64编码
+     * @return String
      */
     public static BufferedImage base64ToBufferedImage(String base64) {
-        BASE64Decoder decoder = new sun.misc.BASE64Decoder();
+        BASE64Decoder decoder = new BASE64Decoder();
         try {
-            byte[] bytes1 = decoder.decodeBuffer(base64);
-            ByteArrayInputStream bais = new ByteArrayInputStream(bytes1);
-            return ImageIO.read(bais);
+            byte[] bytes = decoder.decodeBuffer(base64);
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+            return ImageIO.read(byteArrayInputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }

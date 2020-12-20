@@ -7,12 +7,12 @@
       :on-preview="handlePreview"
       :on-remove="handleRemove"
       :before-remove="beforeRemove"
-      :on-success="onSuccess"
-      :on-progress="onProgress"
+      :on-change="onChange"
       multiple
       :limit="1"
       :on-exceed="handleExceed"
-      :file-list="fileList">
+      :file-list="fileList"
+      :auto-upload="false">
       <el-button size="small" type="primary">上传图片</el-button>
       <div slot="tip" class="el-upload__tip">支持上传jpg/png图片,大小小于10MB</div>
     </el-upload>
@@ -72,9 +72,36 @@ export default {
         });
       }
     },
-    onProgress(){
+    onChange(file){
       this.loading=true;
       this.isShow=true;
+      let _this=this;
+      let reader = new FileReader()
+      reader.readAsDataURL(file.raw)
+      reader.onload  = function(event){
+        let img_base64;
+        if(file.name.split('.')[1]==='png'){
+          img_base64 = this.result.substr(22);
+        }else{
+          img_base64 = this.result.substr(23)
+        }
+        _this.$axios.post("/api/apply/smoke_detection",{base64Data:img_base64}).then(res=>{
+          let data=res.data;
+          if(data.code===200){
+            //检测成功
+            _this.loading=false;
+            _this.url="data:image/jpeg;base64,"+data.data.base64Data;
+            _this.confidences='有烟雾的概率：'+data.data.confidences+'%';
+          }else{
+            //检测失败
+            _this.loading=false;
+            _this.isShow=false;
+            _this.$alert(data.message, '提示', {
+              confirmButtonText: '确定',
+            });
+          }
+        })
+      }
     }
   }
 }

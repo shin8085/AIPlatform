@@ -1,63 +1,55 @@
 package com.shin.service;
 
 import com.shin.utils.Result;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 public interface ApplyService {
 
     /**
      * 人脸识别
-     * @param file 图片
+     * @param base64Data 图片的base64编码
      * @return Result
-     * @throws IOException
      */
-    Result faceDetection(MultipartFile file) throws IOException;
+    Result faceDetection(String base64Data);
 
     /**
      * 年龄检测
-     * @param file 图片
+     * @param base64Data 图片的base64编码
      * @return Result
-     * @throws IOException
      */
-    Result ageEstimation(MultipartFile file) throws IOException;
+    Result ageEstimation(String base64Data);
 
     /**
      * 目标检测
-     * @param file 图片
+     * @param base64Data 图片的base64编码
      * @return Result
      */
-    Result objectDetection(MultipartFile file) throws IOException;
+    Result objectDetection(String base64Data);
 
     /**
      * 烟雾检测
-     * @param file 图片
+     * @param base64Data 图片的base64编码
      * @return Result
-     * @throws IOException
      */
-    Result smokeDetection(MultipartFile file) throws IOException;
+    Result smokeDetection(String base64Data);
 
     /**
      * 驾驶员状态检测
-     * @param file 图片
+     * @param base64Data 图片的base64编码
      * @return Result
-     * @throws IOException
      */
-    Result distractedDriverDetection(MultipartFile file) throws IOException;
+    Result distractedDriverDetection(String base64Data);
 
     /**
      * 口罩检测
-     * @param file 图片
+     * @param base64Data 图片的base64编码
      * @return Result
-     * @throws IOException
      */
-    Result maskDetection(MultipartFile file) throws IOException;
+    Result maskDetection(String base64Data);
 
     /**
      * 性别检测
-     * @param file 图片
+     * @param base64Data 图片的base64编码
      * @return result
      */
-    Result genderDetection(MultipartFile file) throws IOException;
+    Result genderDetection(String base64Data);
 }

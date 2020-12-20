@@ -1,28 +1,18 @@
 package com.shin.controller;
 
-import com.shin.pojo.User;
 import com.shin.service.ApplyService;
-import com.shin.service.InvokingCountService;
-import com.shin.utils.AIInterface;
 import com.shin.utils.ImageTran;
 import com.shin.utils.Result;
 
-import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +26,7 @@ public class ApplyController {
     ApplyService applyService;
 
     @RequestMapping("/test")
-    public Result test(@RequestBody Map<String,String> map) throws IOException {
+    public Result test(@RequestBody Map<String,String> map) {
         String base64 = map.get("base64Data");
         RestTemplate restTemplate=new RestTemplate();
         Map<String,String> request=new HashMap<>();
@@ -46,11 +36,11 @@ public class ApplyController {
         System.out.println(resultMap);
         if(resultMap!=null){
             List<List<Object>> boxes=(List<List<Object>>)resultMap.get("boxes");
-            BufferedImage image = ImageTran.base64ToBufferedImage(base64);
-            if(boxes.isEmpty()){
-                return Result.error(ImageTran.BufferedImageToBase64(image));
-            }
 
+            if(boxes.isEmpty()){
+                return Result.error("未检测到人脸");
+            }
+            BufferedImage image = ImageTran.base64ToBufferedImage(base64);
             Graphics2D graphics = (Graphics2D) image.getGraphics();
             for(int i=0;i<boxes.size();i++){
                 int x1=(int)boxes.get(i).get(0);
@@ -69,76 +59,71 @@ public class ApplyController {
     
     /**
      * 人脸识别
-     * @param file 图片
+     * @param request 请求数据
      * @return Result
-     * @throws IOException
      */
     @RequestMapping("/face_recognize")
-    public Result faceDetection(MultipartFile file) throws IOException {
-        return applyService.faceDetection(file);
+    public Result faceDetection(@RequestBody Map<String,String> request) {
+        return applyService.faceDetection(request.get("base64Data"));
     }
 
     /**
      * 年龄检测
-     * @param file 图片
+     * @param request 请求数据
      * @return Result
-     * @throws IOException
      */
     @RequestMapping("/age_estimation")
-    public Result ageEstimation(MultipartFile file) throws IOException {
-        return applyService.ageEstimation(file);
+    public Result ageEstimation(@RequestBody Map<String,String> request) {
+        return applyService.ageEstimation(request.get("base64Data"));
     }
 
     /**
      * 目标检测
-     * @param file 图片
+     * @param request 请求数据
      * @return Result
      */
     @RequestMapping("/object_detection")
-    public Result objectDetection(MultipartFile file) throws IOException {
-        return applyService.objectDetection(file);
+    public Result objectDetection(@RequestBody Map<String,String> request){
+        return applyService.objectDetection(request.get("base64Data"));
     }
 
     /**
      * 烟雾检测
-     * @param file 图片
+     * @param request 请求数据
      * @return Result
-     * @throws IOException
      */
     @RequestMapping("/smoke_detection")
-    public Result smokeDetection(MultipartFile file) throws IOException {
-        return applyService.smokeDetection(file);
+    public Result smokeDetection(@RequestBody Map<String,String> request){
+        return applyService.smokeDetection(request.get("base64Data"));
     }
 
     /**
      * 驾驶员状态检测
-     * @param file 图片
+     * @param request 请求数据
      * @return Result
-     * @throws IOException
      */
-    @RequestMapping("/distractedDriverDetection")
-    public Result distractedDriverDetection(MultipartFile file) throws IOException {
-        return applyService.distractedDriverDetection(file);
+    @RequestMapping("/distracted_driver_detection")
+    public Result distractedDriverDetection(@RequestBody Map<String,String> request){
+        return applyService.distractedDriverDetection(request.get("base64Data"));
     }
 
     /**
      * 口罩检测
-     * @param file 图片
+     * @param request 请求数据
      * @return Result
-     * @throws IOException
      */
     @RequestMapping("/mask_detection")
-    public Result maskDetection(MultipartFile file) throws IOException {
-        return applyService.maskDetection(file);
+    public Result maskDetection(@RequestBody Map<String,String> request) {
+        return applyService.maskDetection(request.get("base64Data"));
     }
 
     /**
      * 性别检测
-     * @param file 图片
+     * @param request 请求数据
      * @return result
      */
     @RequestMapping("/gender_detection")
-    public Result genderDetection(MultipartFile file) throws IOException {
-        return applyService.genderDetection(file);
+    public Result genderDetection(@RequestBody Map<String,String> request) {
+        return applyService.genderDetection(request.get("base64Data"));
     }
 }
