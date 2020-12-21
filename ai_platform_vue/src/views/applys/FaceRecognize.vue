@@ -18,12 +18,19 @@
     </el-upload>
 
     <div class="demo-image">
-      <el-image
-        style="width: 400px; height: 400px"
-        :src="url"
-        :fit="fit"
-        v-show="isShow"
-        v-loading="loading"></el-image>
+      <el-container v-loading="loading">
+        <img
+          :src="url"
+          v-show="isShow"
+          alt=""
+          style="max-height: 400px;margin-left: auto;margin-right: auto">
+      </el-container>
+<!--      <el-image-->
+<!--        style="width: 400px; height: 400px"-->
+<!--        :src="url"-->
+<!--        :fit="fit"-->
+<!--        v-show="isShow"-->
+<!--        v-loading="loading"></el-image>-->
     </div>
   </div>
 </template>

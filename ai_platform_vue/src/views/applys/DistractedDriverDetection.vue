@@ -18,11 +18,12 @@
     </el-upload>
     <div class="demo-image" v-show="isShow">
       <span class="demonstration" style="display: block;line-height: 10px">{{ status }} {{confidences}}</span>
-      <el-image
-        style="width: 400px; height: 400px"
-        :src="url"
-        :fit="fit"
-        v-loading="loading"></el-image>
+      <el-container v-loading="loading">
+        <img
+          :src="url"
+          alt=""
+          style="max-height: 400px;margin-left: auto;margin-right: auto;margin-top: 10px">
+      </el-container>
     </div>
   </div>
 </template>

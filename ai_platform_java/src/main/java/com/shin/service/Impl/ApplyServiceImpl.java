@@ -53,27 +53,27 @@ public class ApplyServiceImpl implements ApplyService {
     public Result faceDetection(String base64Data){
         Map<String, Object> resultMap = AIInterface.request("/face/recognize",base64Data);
         System.out.println(resultMap);
+        Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
             List<List<Object>> boxes=(List<List<Object>>)resultMap.get("boxes");
             BufferedImage image = ImageTran.base64ToBufferedImage(base64Data);
-            if(boxes.isEmpty()||image==null){
-                return Result.error("未检测到人脸");
+            if(!boxes.isEmpty()&&image!=null){
+                Graphics2D graphics = (Graphics2D) image.getGraphics();
+                for(int i=0;i<boxes.size();i++){
+                    int x1=(int)boxes.get(i).get(0);
+                    int y1=(int)boxes.get(i).get(1);
+                    int x2=(int)boxes.get(i).get(2);
+                    int y2=(int)boxes.get(i).get(3);
+                    graphics.setStroke(new BasicStroke(3.0f));
+                    graphics.setColor(Color.red);
+                    graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
+                }
+                response.put("base64Data",ImageTran.BufferedImageToBase64(image));
+                return Result.success("",response);
             }
-            Graphics2D graphics = (Graphics2D) image.getGraphics();
-            for(int i=0;i<boxes.size();i++){
-                int x1=(int)boxes.get(i).get(0);
-                int y1=(int)boxes.get(i).get(1);
-                int x2=(int)boxes.get(i).get(2);
-                int y2=(int)boxes.get(i).get(3);
-                graphics.setStroke(new BasicStroke(3.0f));
-                graphics.setColor(Color.red);
-                graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
-            }
-            Map<String,Object> response=new HashMap<>();
-            response.put("base64Data",ImageTran.BufferedImageToBase64(image));
-            return Result.success("",response);
         }
-        return Result.error("未检测到人脸");
+        response.put("base64Data",base64Data);
+        return Result.error("未检测到人脸",response);
     }
 
     /**
@@ -85,26 +85,26 @@ public class ApplyServiceImpl implements ApplyService {
     public Result ageEstimation(String base64Data){
         Map<String, Object> resultMap = AIInterface.request("/age/age_estimation",base64Data);
         System.out.println(resultMap);
+        Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
             List<List<Object>> points=(List<List<Object>>)resultMap.get("boxes");
             List<List<Object>> ages=(List<List<Object>>)resultMap.get("result");
             BufferedImage image = ImageTran.base64ToBufferedImage(base64Data);
-            if(points.isEmpty()||image==null){
-                return Result.error("未检测到人脸");
+            if(!points.isEmpty()&&image!=null){
+                Graphics graphics = image.getGraphics();
+                for(int i=0;i<points.size();i++){
+                    int x1=(int)points.get(i).get(0);
+                    int y1=(int)points.get(i).get(1);
+                    double age=(double)ages.get(i).get(0);
+                    graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/10));
+                    graphics.drawString(String.valueOf((int)age)+"岁",x1,y1);
+                }
+                response.put("base64Data",ImageTran.BufferedImageToBase64(image));
+                return Result.success("",response);
             }
-            Graphics graphics = image.getGraphics();
-            for(int i=0;i<points.size();i++){
-                int x1=(int)points.get(i).get(0);
-                int y1=(int)points.get(i).get(1);
-                double age=(double)ages.get(i).get(0);
-                graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/10));
-                graphics.drawString(String.valueOf((int)age)+"岁",x1,y1);
-            }
-            Map<String,Object> response=new HashMap<>();
-            response.put("base64Data",ImageTran.BufferedImageToBase64(image));
-            return Result.success("",response);
         }
-        return Result.error("未检测到人脸");
+        response.put("base64Data",base64Data);
+        return Result.error("未检测到人脸",response);
     }
 
     /**
@@ -116,33 +116,33 @@ public class ApplyServiceImpl implements ApplyService {
     public Result objectDetection(String base64Data){
         Map<String, Object> resultMap = AIInterface.request("/object_detection/object_detection",base64Data);
         System.out.println(resultMap);
+        Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
             List<List<Object>> points=(List<List<Object>>)resultMap.get("boxes");
             List<Integer> result=(List<Integer>)resultMap.get("result");
             BufferedImage image = ImageTran.base64ToBufferedImage(base64Data);
-            if(points.isEmpty()||image==null){
-                return Result.error("未检测到物体");
+            if(!points.isEmpty()&&image!=null){
+                Graphics2D graphics = (Graphics2D) image.getGraphics();
+                for(int i=0;i<points.size();i++){
+                    int x1=(int)points.get(i).get(0);
+                    int y1=(int)points.get(i).get(1);
+                    int x2=(int)points.get(i).get(2);
+                    int y2=(int)points.get(i).get(3);
+                    int r=result.get(i);
+                    graphics.setColor(Color.red);
+                    Font font=new Font("SimSun",Font.BOLD,image.getWidth()/12);
+                    graphics.setFont(font);
+                    FontMetrics fontMetrics = graphics.getFontMetrics(font);
+                    int font_w=fontMetrics.stringWidth(ods[r]); //获取文字宽度
+                    graphics.drawString(ods[r], (x1+x2)/2-font_w/2,(y1+y2)/2); //文字居中显示
+                    graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
+                }
+                response.put("base64Data",ImageTran.BufferedImageToBase64(image));
+                return Result.success("",response);
             }
-            Graphics2D graphics = (Graphics2D) image.getGraphics();
-            for(int i=0;i<points.size();i++){
-                int x1=(int)points.get(i).get(0);
-                int y1=(int)points.get(i).get(1);
-                int x2=(int)points.get(i).get(2);
-                int y2=(int)points.get(i).get(3);
-                int r=result.get(i);
-                graphics.setColor(Color.red);
-                Font font=new Font("SimSun",Font.BOLD,image.getWidth()/12);
-                graphics.setFont(font);
-                FontMetrics fontMetrics = graphics.getFontMetrics(font);
-                int font_w=fontMetrics.stringWidth(ods[r]); //获取文字宽度
-                graphics.drawString(ods[r], (x1+x2)/2-font_w/2,(y1+y2)/2); //文字居中显示
-                graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
-            }
-            Map<String,Object> response=new HashMap<>();
-            response.put("base64Data",ImageTran.BufferedImageToBase64(image));
-            return Result.success("",response);
         }
-        return Result.error("未检测到物体");
+        response.put("base64Data",base64Data);
+        return Result.error("未检测到物体",response);
     }
 
     /**
@@ -194,26 +194,26 @@ public class ApplyServiceImpl implements ApplyService {
     public Result maskDetection(String base64Data){
         Map<String, Object> resultMap = AIInterface.request("/mask_detection/mask_detection",base64Data);
         System.out.println(resultMap);
+        Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
             List<List<Object>> points=(List<List<Object>>)resultMap.get("boxes");
             List<List<String>> result=(List<List<String>>)resultMap.get("result");
             BufferedImage image = ImageTran.base64ToBufferedImage(base64Data);
-            if(points.isEmpty()||image==null){
-                return Result.error("未检测到人脸");
+            if(!points.isEmpty()&&image!=null){
+                Graphics graphics = image.getGraphics();
+                for(int i=0;i<points.size();i++){
+                    int x1=(int)points.get(i).get(0);
+                    int y1=(int)points.get(i).get(1);
+                    String r=result.get(i).get(0);
+                    graphics.setColor(Color.red);
+                    graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/12));
+                    graphics.drawString(r,x1,y1);
+                }
+                response.put("base64Data",ImageTran.BufferedImageToBase64(image));
+                return Result.success("",response);
             }
-            Graphics graphics = image.getGraphics();
-            for(int i=0;i<points.size();i++){
-                int x1=(int)points.get(i).get(0);
-                int y1=(int)points.get(i).get(1);
-                String r=result.get(i).get(0);
-                graphics.setColor(Color.red);
-                graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/12));
-                graphics.drawString(r,x1,y1);
-            }
-            Map<String,Object> response=new HashMap<>();
-            response.put("base64Data",ImageTran.BufferedImageToBase64(image));
-            return Result.success("",response);
         }
+        response.put("base64Data",base64Data);
         return Result.error("未检测到人脸");
     }
 
@@ -226,26 +226,26 @@ public class ApplyServiceImpl implements ApplyService {
     public Result genderDetection(String base64Data) {
         Map<String, Object> resultMap = AIInterface.request("/gender_detection/gender_detection",base64Data);
         System.out.println(resultMap);
+        Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
             List<List<Object>> points=(List<List<Object>>)resultMap.get("box");
             List<String> genders=(List<String>)resultMap.get("gender");
             BufferedImage image = ImageTran.base64ToBufferedImage(base64Data);
-            if(points.isEmpty()||image==null){
-                return Result.error("未检测到人脸");
+            if(!points.isEmpty()&&image!=null){
+                Graphics graphics = image.getGraphics();
+                for(int i=0;i<points.size();i++){
+                    int x1=(int)points.get(i).get(0);
+                    int y1=(int)points.get(i).get(1);
+                    String g=genders.get(i);
+                    graphics.setColor(Color.black);
+                    graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/12));
+                    graphics.drawString(g,x1,y1);
+                }
+                response.put("base64Data",ImageTran.BufferedImageToBase64(image));
+                return Result.success("",response);
             }
-            Graphics graphics = image.getGraphics();
-            for(int i=0;i<points.size();i++){
-                int x1=(int)points.get(i).get(0);
-                int y1=(int)points.get(i).get(1);
-                String g=genders.get(i);
-                graphics.setColor(Color.black);
-                graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/12));
-                graphics.drawString(g,x1,y1);
-            }
-            Map<String,Object> response=new HashMap<>();
-            response.put("base64Data",ImageTran.BufferedImageToBase64(image));
-            return Result.success("",response);
         }
-        return Result.error("未检测到人脸");
+        response.put("base64Data",base64Data);
+        return Result.error("未检测到人脸",response);
     }
 }

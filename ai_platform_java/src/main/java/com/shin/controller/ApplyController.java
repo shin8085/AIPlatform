@@ -34,11 +34,12 @@ public class ApplyController {
         request.put("people_id","123");
         Map<String, Object> resultMap =restTemplate.postForObject("http://lggsoft.vicp.net:8000"+"/face/recognize", request, Map.class);
         System.out.println(resultMap);
+        Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
             List<List<Object>> boxes=(List<List<Object>>)resultMap.get("boxes");
-
             if(boxes.isEmpty()){
-                return Result.error("未检测到人脸");
+                response.put("base64Data",base64);
+                return Result.success("",response);
             }
             BufferedImage image = ImageTran.base64ToBufferedImage(base64);
             Graphics2D graphics = (Graphics2D) image.getGraphics();
@@ -52,9 +53,11 @@ public class ApplyController {
                 graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
             }
 
-            return Result.success(ImageTran.BufferedImageToBase64(image));
+            response.put("base64Data",ImageTran.BufferedImageToBase64(image));
+            return Result.success("",response);
         }
-        return Result.error("未检测到人脸");
+        response.put("base64Data",base64);
+        return Result.success("",response);
     }
     
     /**

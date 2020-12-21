@@ -8,7 +8,8 @@
       <el-button @click="closeCamera">关闭摄像头</el-button>
       <el-button @click="takePhoto">拍照</el-button>
     </div>
-    <img :src="base64_src" alt=""/>
+    <img :src="base64_src" alt="" />
+
   </div>
 </template>
 
@@ -20,7 +21,8 @@ export default {
       video:'',
       fit: 'contain',
       base64_src:'/api/images/initImage.jpg',
-      intervalId:null
+      intervalId:null,
+      stop:false
     }
   },
   methods:{
@@ -43,6 +45,7 @@ export default {
     },
     closeCamera(){
       clearInterval(this.intervalId);
+      this.stop=true;
       let tracks=this.video.srcObject.getTracks();
       tracks.forEach(function(track){
         track.stop();
@@ -59,7 +62,12 @@ export default {
       //video.src = CompatibleURL.createObjectURL(stream);
       this.video.srcObject = stream;
       this.video.play();
-      this.intervalId=setInterval(this.takePhoto,1000);
+      this.intervalId=setInterval(()=>{
+        if(this.stop===false){
+          this.stop=true; //等待请求完成再进行下一次拍摄上传
+          this.takePhoto();
+        }
+      },100);
     },
     error(error) {
       console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
@@ -71,8 +79,9 @@ export default {
       let context = canvas.getContext("2d");
       context.drawImage(this.video, 0, 0, 640, 360);
       let base64Data=canvas.toDataURL().substr(22); //转为base64并截取后22位
-      this.$axios.post('/api/apply/test',{base64Data:base64Data}).then(res=>{
-        this.base64_src="data:image/png;base64,"+res.data.message;
+      this.$axios.post('/api/apply/mask_detection',{base64Data:base64Data}).then(res=>{
+        this.stop=false; //开始下一次拍摄上传
+        this.base64_src="data:image/png;base64,"+res.data.data.base64Data;
       })
     }
   },
