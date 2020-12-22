@@ -79,7 +79,7 @@ export default {
       let context = canvas.getContext("2d");
       context.drawImage(this.video, 0, 0, 640, 360);
       let base64Data=canvas.toDataURL().substr(22); //转为base64并截取后22位
-      this.$axios.post('/api/apply/mask_detection',{base64Data:base64Data}).then(res=>{
+      this.$axios.post('/api/apply/face_recognize',{base64Data:base64Data}).then(res=>{
         this.stop=false; //开始下一次拍摄上传
         this.base64_src="data:image/png;base64,"+res.data.data.base64Data;
       })
