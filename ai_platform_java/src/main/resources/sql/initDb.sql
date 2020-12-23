@@ -4,7 +4,8 @@ create database ai_platform;
 # 用户表
 create table users(
     username varchar(20) primary key not null,
-    password varchar(20) not null
+    password varchar(20) not null,
+    identity varchar(20) not null
 );
 
 # 各用户调用ai次数统计
@@ -20,5 +21,4 @@ create table invoking_count(
     constraint user_invoking foreign key (username) references users(username)
 );
 
-insert into users values ('user','user');
-insert into invoking_count values ('user',0,0,0,0,0,0,0);
+insert into users values ('admin','admin','administrator');

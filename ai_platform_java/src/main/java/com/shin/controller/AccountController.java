@@ -14,6 +14,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class AccountController {
@@ -38,7 +40,11 @@ public class AccountController {
             subject.login(token); //登录
             subject.getSession().setTimeout(24*60*60*1000); //设置session有效时间为24小时
             Session session= subject.getSession();
-            return Result.success("登录成功",session);
+            User login_user=(User)subject.getPrincipal();
+            Map<String,Object> response=new HashMap<>();
+            response.put("session",session);
+            response.put("identity",login_user.getIdentity());
+            return Result.success("登录成功",response);
         }catch (UnknownAccountException e){
             //用户名不存在
             return Result.error("用户不存在");
@@ -55,6 +61,7 @@ public class AccountController {
      */
     @RequestMapping("/register")
     public Result register(@RequestBody User user){
+        user.setIdentity("user");
         boolean result = userService.registerUser(user);
         if(result){
             invokingCountService.initCount(user.getUsername()); //初始化ai调用次数

@@ -8,11 +8,12 @@
       text-color="#fff"
       router
       active-text-color="#ffd04b">
-      <el-menu-item index="/homePage">
+      <!--普通用户侧边栏-->
+      <el-menu-item index="/homePage" v-show="user_show">
         <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
       </el-menu-item>
-      <el-submenu index="/apply">
+      <el-submenu index="/apply" v-show="user_show">
         <template slot="title">
           <i class="el-icon-menu"></i>
           <span>应用</span>
@@ -27,9 +28,14 @@
           <el-menu-item index="/genderDetection">性别检测</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="setting">
+      <el-menu-item index="setting" v-show="user_show">
         <i class="el-icon-setting"></i>
         <span slot="title">设置</span>
+      </el-menu-item>
+      <!--管理员侧边栏-->
+      <el-menu-item v-show="admin_show">
+        <i class="el-icon-user"></i>
+        <span slot="title">用户管理</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -38,10 +44,20 @@
 <script>
 export default {
   name: "MainAside",
-  methods:{
-
+  data() {
+    return {
+      admin_show:false,
+      user_show:false
+    }
+  },
+  mounted() {
+    let identity=sessionStorage.getItem("identity");
+    if(identity==='user'){
+      this.user_show=true;
+    }else if(identity==="administrator"){
+      this.admin_show=true;
+    }
   }
-
 }
 </script>
 

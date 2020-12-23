@@ -24,41 +24,6 @@ public class ApplyController {
 
     @Resource
     ApplyService applyService;
-
-    @RequestMapping("/test")
-    public Result test(@RequestBody Map<String,String> map) {
-        String base64 = map.get("base64Data");
-        RestTemplate restTemplate=new RestTemplate();
-        Map<String,String> request=new HashMap<>();
-        request.put("baseimg",base64);
-        request.put("people_id","123");
-        Map<String, Object> resultMap =restTemplate.postForObject("http://lggsoft.vicp.net:8000"+"/face/recognize", request, Map.class);
-        System.out.println(resultMap);
-        Map<String,Object> response=new HashMap<>();
-        if(resultMap!=null){
-            List<List<Object>> boxes=(List<List<Object>>)resultMap.get("boxes");
-            if(boxes.isEmpty()){
-                response.put("base64Data",base64);
-                return Result.success("",response);
-            }
-            BufferedImage image = ImageTran.base64ToBufferedImage(base64);
-            Graphics2D graphics = (Graphics2D) image.getGraphics();
-            for(int i=0;i<boxes.size();i++){
-                int x1=(int)boxes.get(i).get(0);
-                int y1=(int)boxes.get(i).get(1);
-                int x2=(int)boxes.get(i).get(2);
-                int y2=(int)boxes.get(i).get(3);
-                graphics.setStroke(new BasicStroke(3.0f));
-                graphics.setColor(Color.red);
-                graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
-            }
-
-            response.put("base64Data",ImageTran.BufferedImageToBase64(image));
-            return Result.success("",response);
-        }
-        response.put("base64Data",base64);
-        return Result.success("",response);
-    }
     
     /**
      * 人脸识别
@@ -66,7 +31,7 @@ public class ApplyController {
      * @return Result
      */
     @RequestMapping("/face_recognize")
-    public Result faceDetection(@RequestBody Map<String,String> request) {
+    public Result faceRecognize(@RequestBody Map<String,String> request) {
         return applyService.faceDetection(request.get("base64Data"));
     }
 

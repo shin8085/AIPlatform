@@ -43,10 +43,15 @@ export default {
     loginSystem(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          /**
+           * @param res.data.data.session.id {String} session id
+           * @param res.data.data.identity {String} 用户身份
+           */
           this.$axios.post("/api/login",this.ruleForm).then(res => {
             if(res.data.code===200){
               //校验通过
-              sessionStorage.setItem("loginSessionId",res.data.data.id);
+              sessionStorage.setItem("loginSessionId",res.data.data.session.id);
+              sessionStorage.setItem("identity",res.data.data.identity);
               sessionStorage.setItem('username',this.ruleForm.username);
               this.$router.push("/homePage");
             }else{
