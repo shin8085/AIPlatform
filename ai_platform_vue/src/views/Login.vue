@@ -53,7 +53,11 @@ export default {
               sessionStorage.setItem("loginSessionId",res.data.data.session.id);
               sessionStorage.setItem("identity",res.data.data.identity);
               sessionStorage.setItem('username',this.ruleForm.username);
-              this.$router.push("/homePage");
+              if(res.data.data.identity==="administrator"){
+                this.$router.push("/userManage")
+              }else{
+                this.$router.push("/homePage");
+              }
             }else{
               this.$message({
                 showClose: true,

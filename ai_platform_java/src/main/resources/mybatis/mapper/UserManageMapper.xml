@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shin.dao.UserManageMapper">
+    <select id="getUserInfo" resultType="Map">
+        select
+            users.username,password,face_recognize,age_estimation,
+            object_detection,smoke_detection,distracted_driver_detection,
+               mask_detection,gender_detection
+        from users,invoking_count where users.username=invoking_count.username;
+    </select>
+</mapper>

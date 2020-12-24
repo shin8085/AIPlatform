@@ -14,6 +14,7 @@ import DistractedDriverDetection from "../views/applys/DistractedDriverDetection
 import MaskDetection from "../views/applys/MaskDetection";
 import ObjectDetection from "../views/applys/ObjectDetection";
 import HomePage from "../views/HomePage";
+import UserManage from "../views/admin/UserManage";
 
 Vue.use(Router)
 
@@ -38,6 +39,7 @@ export default new Router({
         {path:'/MaskDetection',name:'maskDetection',component:MaskDetection},
         {path:'/genderDetection',name:'genderDetection',component:GenderDetection},
         {path:'/setting',name:'setting',component:Setting},
+        {path:'/userManage',name:'userManage',component:UserManage},
       ]
     },
     {

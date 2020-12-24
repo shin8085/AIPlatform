@@ -33,7 +33,7 @@
         <span slot="title">设置</span>
       </el-menu-item>
       <!--管理员侧边栏-->
-      <el-menu-item v-show="admin_show">
+      <el-menu-item index="userManage" v-show="admin_show">
         <i class="el-icon-user"></i>
         <span slot="title">用户管理</span>
       </el-menu-item>
