@@ -73,6 +73,21 @@ public class AccountController {
     }
 
     /**
+     * 修改密码
+     * @param request 用户名username、旧密码oldPassword、新密码newPassword
+     * @return Result
+     */
+    @RequestMapping("/changePassword")
+    public Result changePassword(@RequestBody Map<String,String> request){
+        boolean r = userService.changePassword(request.get("username"), request.get("oldPassword"), request.get("newPassword"));
+        if(r){
+            return Result.success("修改成功!");
+        }else{
+            return Result.error("旧密码错误");
+        }
+    }
+
+    /**
      * 检查session是否正确
      * @param sessionId 会话
      * @return Result

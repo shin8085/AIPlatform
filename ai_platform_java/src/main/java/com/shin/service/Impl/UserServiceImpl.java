@@ -37,4 +37,21 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    /**
+     * 修改密码
+     * @param username 用户名
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return boolean 是否修改成功
+     */
+    @Override
+    public boolean changePassword(String username, String oldPassword, String newPassword) {
+        User user = userMapper.queryUserByName(username);
+        if(user.getPassword().equals(oldPassword)){
+            userMapper.updateUserPassword(username,newPassword);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

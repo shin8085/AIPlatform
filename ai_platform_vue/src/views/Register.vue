@@ -7,10 +7,10 @@
           <el-input prefix-icon="el-icon-user" v-model="ruleForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input prefix-icon="el-icon-unlock" type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+          <el-input prefix-icon="el-icon-unlock" type="password" v-model="ruleForm.pass" autocomplete="off" show-password></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input prefix-icon="el-icon-unlock" type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+          <el-input prefix-icon="el-icon-unlock" type="password" v-model="ruleForm.checkPass" autocomplete="off" show-password></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>

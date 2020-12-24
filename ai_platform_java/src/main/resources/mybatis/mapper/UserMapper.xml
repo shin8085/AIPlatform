@@ -9,4 +9,7 @@
     <select id="queryUserByName" resultType="com.shin.pojo.User" parameterType="String">
         select username,password,identity from users where #{username}=username;
     </select>
+    <update id="updateUserPassword" parameterType="String">
+        update users set password=#{password} where username=#{username};
+    </update>
 </mapper>

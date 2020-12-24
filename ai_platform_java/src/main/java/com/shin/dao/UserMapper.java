@@ -20,4 +20,11 @@ public interface UserMapper {
      * @return User
      */
     User queryUserByName(String username);
+
+    /**
+     * 修改密码
+     * @param username 用户名
+     * @param password 密码
+     */
+    void updateUserPassword(String username,String password);
 }
