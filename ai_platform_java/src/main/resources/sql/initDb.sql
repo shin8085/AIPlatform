@@ -18,7 +18,7 @@ create table invoking_count(
     distracted_driver_detection int(6) default 0 comment '驾驶员状态检测',
     mask_detection int(6) default 0 comment '口罩检测',
     gender_detection int(6) default 0 comment '年龄检测',
-    constraint user_invoking foreign key (username) references users(username)
+    constraint user_invoking foreign key (username) references users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 insert into users values ('admin','admin','administrator');

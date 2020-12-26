@@ -10,4 +10,45 @@
                mask_detection,gender_detection
         from users,invoking_count where users.username=invoking_count.username;
     </select>
+    <update id="updateUser">
+        update
+            users
+        <set>
+            <if test="user.username!=null">
+                username=#{user.username},
+            </if>
+            <if test="user.password!=null">
+                password=#{user.password},
+            </if>
+            <if test="user.identity!=null">
+                identity=#{user.identity}
+            </if>
+        </set>
+        <where>
+            <if test="oldUsername!=null">
+                username=#{oldUsername};
+            </if>
+        </where>
+    </update>
+    <update id="updateInvokingCount" parameterType="com.shin.pojo.InvokingCount">
+        update
+            invoking_count
+        <set>
+            <if test="face_recognize!=null">face_recognize=#{face_recognize},</if>
+            <if test="age_estimation!=null">age_estimation=#{age_estimation},</if>
+            <if test="object_detection!=null">object_detection=#{object_detection},</if>
+            <if test="smoke_detection!=null">smoke_detection=#{smoke_detection},</if>
+            <if test="distracted_driver_detection!=null">distracted_driver_detection=#{distracted_driver_detection},</if>
+            <if test="mask_detection!=null">mask_detection=#{mask_detection},</if>
+            <if test="gender_detection!=null">gender_detection=#{gender_detection},</if>
+        </set>
+        where
+            username=#{username};
+    </update>
+    <delete id="deleteUser" parameterType="String">
+        delete from users where username=#{username};
+    </delete>
+    <delete id="deleteInvokingCount" parameterType="String">
+        delete from invoking_count where username=#{username};
+    </delete>
 </mapper>

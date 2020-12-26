@@ -6,10 +6,10 @@
         <el-form-item prop="username">
           <el-input prefix-icon="el-icon-user" v-model="ruleForm.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
+        <el-form-item prop="pass">
           <el-input prefix-icon="el-icon-unlock" type="password" v-model="ruleForm.pass" autocomplete="off" show-password></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
+        <el-form-item prop="checkPass">
           <el-input prefix-icon="el-icon-unlock" type="password" v-model="ruleForm.checkPass" autocomplete="off" show-password></el-input>
         </el-form-item>
         <el-form-item>
