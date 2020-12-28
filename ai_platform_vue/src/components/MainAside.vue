@@ -2,7 +2,7 @@
   <div style="width: inherit">
     <h5 style="line-height: 120px">AI开放平台</h5>
     <el-menu
-      default-active="/homePage"
+      :default-active="menu_active"
       class="el-menu-vertical-demo"
       background-color="#333"
       text-color="#fff"
@@ -28,14 +28,18 @@
           <el-menu-item index="/genderDetection">性别检测</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="setting" v-show="user_show">
+      <el-menu-item index="/setting" v-show="user_show">
         <i class="el-icon-setting"></i>
         <span slot="title">设置</span>
       </el-menu-item>
       <!--管理员侧边栏-->
-      <el-menu-item index="userManage" v-show="admin_show">
+      <el-menu-item index="/userManage" v-show="admin_show">
         <i class="el-icon-user"></i>
         <span slot="title">用户管理</span>
+      </el-menu-item>
+      <el-menu-item index="/applyManage" v-show="admin_show">
+        <i class="el-icon-user"></i>
+        <span slot="title">应用管理</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -46,6 +50,7 @@ export default {
   name: "MainAside",
   data() {
     return {
+      menu_active:'/homePage',
       admin_show:false,
       user_show:false
     }
@@ -53,8 +58,10 @@ export default {
   mounted() {
     let identity=sessionStorage.getItem("identity");
     if(identity==='user'){
+      this.menu_active='/homePage'
       this.user_show=true;
     }else if(identity==="administrator"){
+      this.menu_active='/userManage'
       this.admin_show=true;
     }
   }

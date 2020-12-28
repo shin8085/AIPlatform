@@ -15,6 +15,7 @@ import MaskDetection from "../views/applys/MaskDetection";
 import ObjectDetection from "../views/applys/ObjectDetection";
 import HomePage from "../views/HomePage";
 import UserManage from "../views/admin/UserManage";
+import ApplyManage from "../views/admin/ApplyManage";
 
 Vue.use(Router)
 
@@ -40,6 +41,7 @@ export default new Router({
         {path:'/genderDetection',name:'genderDetection',component:GenderDetection},
         {path:'/setting',name:'setting',component:Setting},
         {path:'/userManage',name:'userManage',component:UserManage},
+        {path:'/applyManage',name:'applyManage',component:ApplyManage},
       ]
     },
     {

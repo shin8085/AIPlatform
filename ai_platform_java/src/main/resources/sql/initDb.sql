@@ -21,4 +21,17 @@ create table invoking_count(
     constraint user_invoking foreign key (username) references users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+create table apply(
+    apply_name varchar(40) not null primary key,
+    invoking_count int(6) default 0,
+    is_open boolean default true
+);
+
 insert into users values ('admin','admin','administrator');
+insert into apply values ('face_recognize',0,true);
+insert into apply values ('age_estimation',0,true);
+insert into apply values ('object_detection',0,true);
+insert into apply values ('smoke_detection',0,true);
+insert into apply values ('distracted_driver_detection',0,true);
+insert into apply values ('mask_detection',0,true);
+insert into apply values ('gender_detection',0,true);

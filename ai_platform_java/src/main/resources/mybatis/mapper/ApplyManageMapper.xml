@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shin.dao.ApplyManageMapper">
+    <select id="getAllApply" resultType="com.shin.pojo.Apply">
+        select apply_name,invoking_count,is_open from apply;
+    </select>
+    <update id="updateApply" parameterType="com.shin.pojo.Apply">
+        update
+            apply
+        <set>
+            <if test="invoking_count!=null and invoking_count!=''">
+                invoking_count=#{invoking_count},
+            </if>
+            <if test="is_open!=null"> <!--传入false或0时视为''-->
+                is_open=${is_open},
+            </if>
+        </set>
+        <where>
+            <if test="apply_name!=null and apply_name!=''">
+                apply_name=#{apply_name};
+            </if>
+        </where>
+    </update>
+</mapper>
