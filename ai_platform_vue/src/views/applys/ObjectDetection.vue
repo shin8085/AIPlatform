@@ -170,7 +170,9 @@ export default {
     }
   },
   beforeDestroy() {
-    this.closeCamera();
+    if(this.isTakeVideo===true){
+      this.closeCamera();
+    }
   }
 }
 </script>

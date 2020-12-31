@@ -54,19 +54,5 @@ export default new Router({
       name: 'register',
       component: Register
     }
-    // {
-    //   path: '/apply',
-    //   name: 'apply',
-    //   component: {
-    //     mainContent:Apply
-    //   }
-    // },
-    // {
-    //   path: '/setting',
-    //   name: 'setting',
-    //   component: {
-    //     mainContent: Setting
-    //   }
-    // }
   ]
 })
