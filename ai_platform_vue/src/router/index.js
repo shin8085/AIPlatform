@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import MainView from "../views/MainView";
 import Apply from "../views/Apply";
 import Setting from "../views/Setting";
-import App from "../App";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import AgeEstimation from "../views/applys/AgeEstimation";
@@ -16,9 +15,13 @@ import ObjectDetection from "../views/applys/ObjectDetection";
 import HomePage from "../views/HomePage";
 import UserManage from "../views/admin/UserManage";
 import ApplyManage from "../views/admin/ApplyManage";
+import ApplyUnOpen from "../views/error/ApplyUnOpen";
 
 Vue.use(Router)
-
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 export default new Router({
   mode: 'history',
   routes: [
@@ -42,6 +45,7 @@ export default new Router({
         {path:'/setting',name:'setting',component:Setting},
         {path:'/userManage',name:'userManage',component:UserManage},
         {path:'/applyManage',name:'applyManage',component:ApplyManage},
+        {path:'/applyUnOpen',name:'applyUnOpen',component:ApplyUnOpen},
       ]
     },
     {
