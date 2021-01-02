@@ -58,6 +58,7 @@
     </el-table>
     <!--编辑对话框-->
     <el-dialog
+      :close-on-click-modal=false
       :visible.sync="editDialogVisible"
       width="25%">
       <el-form

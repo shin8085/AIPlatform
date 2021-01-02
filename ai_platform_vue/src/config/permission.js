@@ -25,8 +25,7 @@ router.beforeEach((to,from,next)=>{
       })
     }
   }else{
-    // next();
-    toView(to,next);
+    next();
   }
 })
 function toView(to,next){
