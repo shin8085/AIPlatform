@@ -22,4 +22,10 @@ public interface ApplyManageMapper {
      * @return int
      */
     int updateApply(Apply apply);
+
+    /**
+     * ai调用次数+1
+     * @param apply_name ai应用名
+     */
+    int countInc(String apply_name);
 }

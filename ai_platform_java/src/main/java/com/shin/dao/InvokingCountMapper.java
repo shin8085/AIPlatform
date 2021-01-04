@@ -18,5 +18,5 @@ public interface InvokingCountMapper {
      * @param username 用户名
      * @param column 字段名
      */
-    void countInc(String username,String column);
+    int countInc(String username,String column);
 }

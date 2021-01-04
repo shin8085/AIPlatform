@@ -1,5 +1,6 @@
 package com.shin.aop;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shin.pojo.User;
 import com.shin.service.InvokingCountService;
 import org.apache.shiro.SecurityUtils;
@@ -11,9 +12,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
-//@Aspect
-//@Component
+@Aspect
+@Component
 public class ApplyAspect {
 
     @Resource

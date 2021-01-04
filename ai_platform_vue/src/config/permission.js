@@ -32,7 +32,7 @@ function toView(to,next){
   Axios.get("/api/applyManage/getApplyInfo").then(res=>{
     let ai_status=res.data.data;
     let ai_opened=[];
-    let ai_apply=[]
+    let ai_apply=[];
     for(let i=0;i<ai_status.length;i++){
       ai_apply.push(ai_status[i].apply_name)
       if(ai_status[i].is_open===true){

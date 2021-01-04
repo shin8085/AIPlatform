@@ -23,4 +23,7 @@
             </if>
         </where>
     </update>
+    <update id="countInc" parameterType="String">
+        update apply set invoking_count=invoking_count+1 where apply_name=#{apply_name};
+    </update>
 </mapper>
