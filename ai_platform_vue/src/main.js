@@ -10,6 +10,7 @@ import './config/permission'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios=Axios
+window.dataTran=new Vue()
 Vue.use(ElementUI)
 
 /* eslint-disable no-new */

@@ -1,0 +1,19 @@
+common={
+  pagePath:{
+    homePage:['首页'],
+    faceRecognize:['应用','人脸检测'],
+    ageEstimation:['应用','年龄检测'],
+    objectDetection:['应用','目标检测'],
+    smokeDetection:['应用','烟雾检测'],
+    distractedDriverDetection:['应用','驾驶员状态检测'],
+    maskDetection:['应用','口罩检测'],
+    genderDetection:['应用','性别检测'],
+    setting:['设置'],
+    userManage:['用户管理'],
+    applyManage:['应用管理'],
+    applyUnOpen:['错误页面']
+  },
+  getPagePath:function(name){
+    return this.pagePath[name];
+  }
+}

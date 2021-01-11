@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div style="height: inherit;">
+    <span style="float: left;margin-top: 25px">
+      <el-breadcrumb separator="/">
+      <el-breadcrumb-item v-for="title in titles" :key="title">{{ title }}</el-breadcrumb-item>
+    </el-breadcrumb>
+    </span>
     <span style="float: right">
       <el-dropdown trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
@@ -33,6 +38,7 @@
 </template>
 
 <script>
+import '../utils/common'
 export default {
   name: "MainHeader",
   data(){
@@ -58,6 +64,7 @@ export default {
     return {
       username: '',
       dialogForChangePassword:false,
+      titles:[],
       ruleForm: {
         username: '',
         oldPass:'',
@@ -79,6 +86,16 @@ export default {
   },
   mounted() {
     this.username=sessionStorage.getItem("username");
+    let identity=sessionStorage.getItem("identity");
+    // if(identity==='user'){
+      this.titles=common.getPagePath(this.$route.path.split('/')[1]);
+    // }else if(identity==="administrator"){
+    //   this.titles=common.getPagePath(this.$route.path.split('/')[1]);
+    // }
+    let _this=this;
+    dataTran.$on('pagePath',function(data){
+      _this.titles=data;
+    })
   },
   methods: {
     handleCommand(command) {
@@ -133,7 +150,7 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     }
-  }
+  },
 }
 </script>
 
