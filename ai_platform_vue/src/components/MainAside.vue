@@ -2,7 +2,7 @@
   <div style="width: inherit">
     <h5 style="line-height: 120px">AI开放平台</h5>
     <el-menu
-      :default-active="menu_active"
+      :default-active="$route.path"
       class="el-menu-vertical-demo"
       background-color="#333"
       text-color="#fff"
@@ -28,10 +28,10 @@
           <el-menu-item index="/genderDetection">性别检测</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="/setting" v-show="user_show">
-        <i class="el-icon-setting"></i>
-        <span slot="title">设置</span>
-      </el-menu-item>
+<!--      <el-menu-item index="/setting" v-show="user_show">-->
+<!--        <i class="el-icon-setting"></i>-->
+<!--        <span slot="title">设置</span>-->
+<!--      </el-menu-item>-->
       <!--管理员侧边栏-->
       <el-menu-item index="/userManage" v-show="admin_show">
         <i class="el-icon-user"></i>

@@ -66,7 +66,8 @@ public class ApplyServiceImpl implements ApplyService {
                     int y2=(int)boxes.get(i).get(3);
                     graphics.setStroke(new BasicStroke(3.0f));
                     graphics.setColor(Color.red);
-                    graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
+//                    graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
+                    graphics.drawRect(x1,y1,x2,y2);
                 }
                 response.put("base64Data",ImageTran.BufferedImageToBase64(image));
                 return Result.success("",response);
@@ -88,16 +89,19 @@ public class ApplyServiceImpl implements ApplyService {
         Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
             List<List<Object>> points=(List<List<Object>>)resultMap.get("boxes");
-            List<List<Object>> ages=(List<List<Object>>)resultMap.get("result");
+//            List<List<Object>> ages=(List<List<Object>>)resultMap.get("result");
+            List<Object> ages=(List<Object>)resultMap.get("result");
             BufferedImage image = ImageTran.base64ToBufferedImage(base64Data);
             if(!points.isEmpty()&&image!=null){
                 Graphics graphics = image.getGraphics();
                 for(int i=0;i<points.size();i++){
                     int x1=(int)points.get(i).get(0);
                     int y1=(int)points.get(i).get(1);
-                    double age=(double)ages.get(i).get(0);
+//                    double age=(double)ages.get(i).get(0);
+                    String age=(String)ages.get(i);
                     graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/10));
-                    graphics.drawString(String.valueOf((int)age)+"岁",x1,y1);
+//                    graphics.drawString(String.valueOf((int)age)+"岁",x1,y1);
+                    graphics.drawString(age+"岁",x1,y1);
                 }
                 response.put("base64Data",ImageTran.BufferedImageToBase64(image));
                 return Result.success("",response);
@@ -119,22 +123,31 @@ public class ApplyServiceImpl implements ApplyService {
         Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
             List<List<Object>> points=(List<List<Object>>)resultMap.get("boxes");
-            List<Integer> result=(List<Integer>)resultMap.get("result");
+//            List<Integer> result=(List<Integer>)resultMap.get("result");
+            List<List<String>> result=(List<List<String>>)resultMap.get("result");
             BufferedImage image = ImageTran.base64ToBufferedImage(base64Data);
             if(!points.isEmpty()&&image!=null){
                 Graphics2D graphics = (Graphics2D) image.getGraphics();
                 for(int i=0;i<points.size();i++){
-                    int x1=(int)points.get(i).get(0);
-                    int y1=(int)points.get(i).get(1);
-                    int x2=(int)points.get(i).get(2);
-                    int y2=(int)points.get(i).get(3);
-                    int r=result.get(i);
+//                    int x1=(int)points.get(i).get(0);
+//                    int y1=(int)points.get(i).get(1);
+//                    int x2=(int)points.get(i).get(2);
+//                    int y2=(int)points.get(i).get(3);
+                    int x1=Double.valueOf((Double) points.get(i).get(0)).intValue();
+                    int y1=Double.valueOf((Double) points.get(i).get(1)).intValue();
+                    int x2=Double.valueOf((Double) points.get(i).get(2)).intValue();
+                    int y2=Double.valueOf((Double) points.get(i).get(3)).intValue();
+//                    int r=result.get(i);
+                    String r=result.get(i).get(0);
                     graphics.setColor(Color.red);
                     Font font=new Font("SimSun",Font.BOLD,image.getWidth()/12);
                     graphics.setFont(font);
                     FontMetrics fontMetrics = graphics.getFontMetrics(font);
-                    int font_w=fontMetrics.stringWidth(ods[r]); //获取文字宽度
-                    graphics.drawString(ods[r], (x1+x2)/2-font_w/2,(y1+y2)/2); //文字居中显示
+//                    int font_w=fontMetrics.stringWidth(ods[r]); //获取文字宽度
+//                    graphics.drawString(ods[r], (x1+x2)/2-font_w/2,(y1+y2)/2); //文字居中显示
+                    int font_w=fontMetrics.stringWidth(r); //获取文字宽度
+                    graphics.drawString(r, (x1+x2)/2-font_w/2,(y1+y2)/2); //文字居中显示
+
                     graphics.drawRect(x1,y1,Math.abs(x1-x2),Math.abs(y1-y2));
                 }
                 response.put("base64Data",ImageTran.BufferedImageToBase64(image));
@@ -154,10 +167,10 @@ public class ApplyServiceImpl implements ApplyService {
     public Result smokeDetection(String base64Data){
         Map<String, Object> resultMap = AIInterface.request("/smoke_detection/smoke_detection",base64Data);
         System.out.println(resultMap);
-        double confidences= (double) ((List<Object>)resultMap.get("confidences")).get(0);
+        double confidences= (double) ((List<List<Double>>)resultMap.get("confidence")).get(0).get(0);
         NumberFormat numberFormat=NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(2);
-        String result=numberFormat.format(confidences*100);
+        String result=numberFormat.format(confidences);
         Map<String,String> response=new HashMap<>();
         response.put("base64Data",base64Data);
         response.put("confidences",result);
@@ -202,8 +215,10 @@ public class ApplyServiceImpl implements ApplyService {
             if(!points.isEmpty()&&image!=null){
                 Graphics graphics = image.getGraphics();
                 for(int i=0;i<points.size();i++){
-                    int x1=(int)points.get(i).get(0);
-                    int y1=(int)points.get(i).get(1);
+//                    int x1=(int)points.get(i).get(0);
+//                    int y1=(int)points.get(i).get(1);
+                    int x1=Double.valueOf((Double) points.get(i).get(0)).intValue();
+                    int y1=Double.valueOf((Double) points.get(i).get(1)).intValue();
                     String r=result.get(i).get(0);
                     graphics.setColor(Color.red);
                     graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/12));
@@ -228,16 +243,18 @@ public class ApplyServiceImpl implements ApplyService {
         System.out.println(resultMap);
         Map<String,Object> response=new HashMap<>();
         if(resultMap!=null){
-            List<List<Object>> points=(List<List<Object>>)resultMap.get("box");
-            List<String> genders=(List<String>)resultMap.get("gender");
+            List<List<Object>> points=(List<List<Object>>)resultMap.get("boxes");
+//            List<String> genders=(List<String>)resultMap.get("gender");
+            List<String> result=(List<String>)resultMap.get("result");
             BufferedImage image = ImageTran.base64ToBufferedImage(base64Data);
             if(!points.isEmpty()&&image!=null){
                 Graphics graphics = image.getGraphics();
                 for(int i=0;i<points.size();i++){
                     int x1=(int)points.get(i).get(0);
                     int y1=(int)points.get(i).get(1);
-                    String g=genders.get(i);
-                    graphics.setColor(Color.black);
+//                    String g=genders.get(i);
+                    String g=result.get(i);
+                    graphics.setColor(Color.red);
                     graphics.setFont(new Font("SimSun",Font.BOLD,image.getWidth()/12));
                     graphics.drawString(g,x1,y1);
                 }
