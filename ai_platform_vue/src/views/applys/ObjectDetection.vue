@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="apply_description">
+      <div class="apply_description_container">
+        <div class="apply_description_name">目标检测</div>
+        <div class="apply_description_detail">检测物体的类别，目前可检测80种物体</div>
+      </div>
+    </div>
     <el-upload
       class="upload-demo"
       action="/api/apply/object_detection"
@@ -31,6 +37,7 @@
 </template>
 
 <script>
+import "../../assets/css/apply_page.css"
 export default {
   name: "ObjectDetection",
   data() {
@@ -188,4 +195,5 @@ export default {
 .el-upload__tip{
   line-height: 20px;
 }
+
 </style>

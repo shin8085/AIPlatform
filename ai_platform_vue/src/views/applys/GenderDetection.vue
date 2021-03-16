@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="apply_description">
+      <div class="apply_description_container">
+        <div class="apply_description_name">性别检测</div>
+        <div class="apply_description_detail">检测人的性别</div>
+      </div>
+    </div>
     <el-upload
       class="upload-demo"
       action="/api/apply/gender_detection"
@@ -31,6 +37,7 @@
 </template>
 
 <script>
+import "../../assets/css/apply_page.css"
 export default {
   name: "GenderDetection",
   data() {

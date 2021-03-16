@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="apply_description">
+      <div class="apply_description_container">
+        <div class="apply_description_name">人脸识别</div>
+        <div class="apply_description_detail">识别人脸，并且使用方框进行标识</div>
+      </div>
+    </div>
     <el-upload
       class="upload-demo"
       action="/api/apply/face_recognize"
@@ -36,14 +42,15 @@
 </template>
 
 <script>
+import "../../assets/css/apply_page.css"
 export default {
   name: "FaceRecognize",
   data() {
     return {
       fileList: [],
       fit: 'contain',
-      url: '/api/images/initImage.jpg',
-      isShow: false,
+      url: '/api/images/face_recognize_example.jfif',
+      isShow: true,
       loading: false,
       stop:false, //是否停止上传
       isTakeVideo:false, //是否正在拍摄视频
@@ -193,4 +200,6 @@ export default {
 .el-upload__tip{
   line-height: 20px;
 }
+
+
 </style>
