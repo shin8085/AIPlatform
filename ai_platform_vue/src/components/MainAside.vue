@@ -28,6 +28,10 @@
           <el-menu-item index="/genderDetection">性别检测</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
+      <el-menu-item index="/personalCenter" v-show="user_show">
+        <i class="el-icon-s-home"></i>
+        <span slot="title">个人中心</span>
+      </el-menu-item>
 <!--      <el-menu-item index="/setting" v-show="user_show">-->
 <!--        <i class="el-icon-setting"></i>-->
 <!--        <span slot="title">设置</span>-->

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shin.dao.UserInfoMapper">
+
+    <insert id="insertUserInfo">
+        insert into user_info values (#{userInfo.username},#{userInfo.sex},#{userInfo.birthday},#{userInfo.mail},#{userInfo.join_date});
+    </insert>
+
+    <select id="getUserInfoByUsername" resultType="com.shin.pojo.UserInfo">
+        select * from user_info where username=#{username};
+    </select>
+
+    <update id="updateUserInfo">
+        update
+            user_info
+        <set>
+            <if test="userInfo.sex!=null">
+                sex=#{userInfo.sex},
+            </if>
+            <if test="userInfo.birthday!=null">
+                birthday=#{userInfo.birthday},
+            </if>
+            <if test="userInfo.mail!=null">
+                mail=#{userInfo.mail},
+            </if>
+        </set>
+        <where>
+            <if test="userInfo.username">
+                username=#{userInfo.username};
+            </if>
+        </where>
+    </update>
+
+    <select id="getUserInvokingCountByUsername" parameterType="String" resultType="Map">
+        select * from invoking_count where username=#{username};
+    </select>
+
+</mapper>

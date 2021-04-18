@@ -9,6 +9,7 @@ common={
     maskDetection:['应用','口罩检测'],
     genderDetection:['应用','性别检测'],
     setting:['设置'],
+    personalCenter:['个人中心'],
     userManage:['用户管理'],
     applyManage:['应用管理'],
     applyUnOpen:['错误页面']

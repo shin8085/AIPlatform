@@ -16,6 +16,7 @@ import HomePage from "../views/HomePage";
 import UserManage from "../views/admin/UserManage";
 import ApplyManage from "../views/admin/ApplyManage";
 import ApplyUnOpen from "../views/error/ApplyUnOpen";
+import PersonalCenter from "../views/PersonalCenter";
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -35,6 +36,7 @@ export default new Router({
       children:[
         {path:'/homePage',name:'homePage',component:HomePage},
         {path:'/apply',name:'apply',component:Apply},
+        {path:'/personalCenter',name:'personalCenter',component: PersonalCenter},
         {path:'/faceRecognize',name:'faceRecognize',component:FaceRecognize},
         {path:'/ageEstimation',name:'ageEstimation',component:AgeEstimation},
         {path:'/objectDetection',name:'objectDetection',component:ObjectDetection},

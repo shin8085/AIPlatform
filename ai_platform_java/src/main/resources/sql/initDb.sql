@@ -8,6 +8,16 @@ create table users(
     identity varchar(20) not null
 );
 
+# 用户信息表
+create table user_info(
+    username varchar(20) primary key not null,
+    sex varchar(2) comment '性别',
+    birthday date comment '生日',
+    mail varchar(40) comment '邮箱',
+    join_date date comment '注册日期',
+    constraint user_info foreign key (username) references users(username) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 # 各用户调用ai次数统计
 create table invoking_count(
     username varchar(20) primary key not null,

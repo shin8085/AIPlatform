@@ -2,7 +2,9 @@ package com.shin.controller;
 
 import com.shin.dao.InvokingCountMapper;
 import com.shin.pojo.User;
+import com.shin.pojo.UserInfo;
 import com.shin.service.InvokingCountService;
+import com.shin.service.UserInfoService;
 import com.shin.service.UserService;
 import com.shin.utils.Result;
 import org.apache.shiro.SecurityUtils;
@@ -14,6 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +28,9 @@ public class AccountController {
 
     @Resource
     InvokingCountService invokingCountService;
+
+    @Resource
+    UserInfoService userInfoService;
 
     /**
      * 用户登录
@@ -64,6 +70,10 @@ public class AccountController {
         user.setIdentity("user");
         boolean result = userService.registerUser(user);
         if(result){
+            UserInfo userInfo=new UserInfo();
+            userInfo.setUsername(user.getUsername());
+            userInfo.setJoin_date(new Date(new java.util.Date().getTime()));
+            userInfoService.insertUserInfo(userInfo);
             invokingCountService.initCount(user.getUsername()); //初始化ai调用次数
             return Result.success("注册成功");
         }
